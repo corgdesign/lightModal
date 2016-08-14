@@ -1,3 +1,7 @@
+//  lightModal.jquery.js
+//  Author: Martin Stewart, Corg Design - http://corgdesign.github.io
+//  License: MIT
+
 (function( $ ) {
 
     $.fn.lightModal = function () {
