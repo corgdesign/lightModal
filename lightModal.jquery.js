@@ -5,45 +5,74 @@
 (function( $ ) {
 
     $.fn.lightModal = function () {
-
-        var image, imageAlt, imageURL;                                           // Set up some variables
         
+        // Set up some variables
+        var image, imageAlt, imageURL;                                           
+        
+        // Add lightbox styles to body
+        var styles = '<style>#lightbox-bg{position:fixed;top:0;left:0;width:100%;height:100%;display:none;background:rgba(0, 0, 0, 0.8);z-index:10000;}#lightbox-bg img{display:block;height:auto;max-width:80%;max-height:80%;overflow:auto;margin:auto;position:absolute;top:0;left:0;bottom:0;right:0;}</style>';
+
+        $('body').append(styles);                                               
+        
+        // lightbox hasn't been activated yet
         var lightboxActive = false;
 
+        // Preload the images
+        $('a[href$=".jpg"], a[href$=".png"], a[href$=".gif"]').each( function(){                  
+            
+            var preloadImgUrl = $(this).attr('href');
+
+            $("<img />").attr("src", preloadImgUrl);
+        }); 
+
+        
+        // If link href ends in .jpg, .png, .gif
         $('a[href$=".jpg"], a[href$=".png"], a[href$=".gif"]')
-        .click( function( e ) {                                                  // If link href ends in .jpg
+        .on( 'click', function( e ) {                                            
+        
+            // Prevent the link from working as normal
+            e.preventDefault();                                                  
             
-            e.preventDefault();                                                  // Prevent the link from working as normal
-            
-            if( !lightboxActive ) {                                              // Check if the lightbox has been activated already, and if not:
+            // Check if the lightbox has been activated already, and if not:
+            if( !lightboxActive ) {                                              
                 
-                $('body').append('<div id="lightbox-bg"/>');                     // Append the #lightbox-bg
+                // Append the #lightbox-bg
+                $('body').append('<div id="lightbox-bg"/>');                     
                 
-                $('#lightbox-bg').fadeIn(500);                                   // Then fade it in
+                // Then fade it in
+                $('#lightbox-bg').fadeIn(500);                                   
             
             } else {
-            
-                $('#lightbox-bg').fadeIn(500);                                   // Else: fade in #lightbox-bg as it's been activated
+                // Else: fade in #lightbox-bg as it's been activated
+                $('#lightbox-bg').fadeIn(500);                                   
             
             }
             
-            imgURL = $(this).attr('href');                                       // Get the url of the link
+            // Get the url of the link
+            imgURL = $(this).attr('href');                                       
             
-            imgAlt = $(this).children('img').attr('alt');                        // Get the image alt
+            // Get the image alt
+            imgAlt = $(this).children('img').attr('alt');                        
             
-            image = '<img src="' + imgURL + '" alt="' + imgAlt + '" />';         // Build the <image> tag
+            // Build the <image> tag
+            image = '<img src="' + imgURL + '" alt="' + imgAlt + '" />';         
             
-            $('#lightbox-bg').append(image);                                     // Append image to #lightbox-bg
+            // Append image to #lightbox-bg
+            $('#lightbox-bg').append(image);                                     
             
-            lightboxActive = true;                                               // Lightbox has been activated
+            // Lightbox has been activated
+            lightboxActive = true;                                               
             
         });
-
-        function removeLightbox(){                                                // Function to fade out lightbox
+        
+        // Function to fade out lightbox
+        function removeLightbox(){                                                
             
-            $('#lightbox-bg').fadeOut(500);                                       // Fade out #lightbox-bg
+            // Fade out #lightbox-bg
+            $('#lightbox-bg').fadeOut(500);                                       
             
-            $('#lightbox-bg').children().remove();                                // Remove any children from #lightbox-bg
+            // Remove any children from #lightbox-bg
+            $('#lightbox-bg').children().remove();                                
             
         };
 
@@ -52,10 +81,12 @@
             removeLightbox();
             
         });
-
-        $(document).keyup( function(e){                                            // Remove lightbox if esc key is pressed
+        
+        // Remove lightbox if esc key is pressed
+        $(document).keyup( function(e){                                            
             
-            if (e.which == 27 && lightboxActive) {                                // escape key maps to keycode `27`
+            // escape key maps to keycode `27`
+            if (e.which == 27 && lightboxActive) {                                
                 
                 removeLightbox();
             
