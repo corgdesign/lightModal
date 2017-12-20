@@ -1,5 +1,5 @@
 //  lightModal.jquery.js
-//  Author: Martin Stewart, Corg Design - http://corgdesign.github.io
+//  Author: Martin Stewart, Corg Design - http://www.corgdesign.com
 //  License: MIT
 
 (function( $ ) {
